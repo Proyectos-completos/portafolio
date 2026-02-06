@@ -678,6 +678,20 @@ body {
     color: var(--accent-red);
 }
 
+.contact-photo {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 2rem;
+}
+
+.contact-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    object-fit: cover;
+    display: block;
+}
+
 .contact-social {
     display: flex;
     flex-direction: column;
@@ -696,6 +710,9 @@ body {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    width: 100%;
+    text-align: center;
+    max-width: 250px;
 }
 
 .social-link:hover {
