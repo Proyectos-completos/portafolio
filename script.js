@@ -1,3 +1,4 @@
+// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -11,21 +12,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Navbar scroll effect
 const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
-
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
+    if (window.scrollY > 50) {
+        navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
     } else {
-        navbar.classList.remove('scrolled');
+        navbar.style.boxShadow = 'none';
     }
-    
-    lastScroll = currentScroll;
 });
 
+// Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -43,31 +40,30 @@ if (hamburger) {
     });
 }
 
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Experience navigation
+const navItems = document.querySelectorAll('.nav-item');
+const experienceDetails = document.querySelectorAll('.experience-detail');
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const target = item.getAttribute('data-target');
+        
+        // Remove active class from all items
+        navItems.forEach(nav => nav.classList.remove('active'));
+        experienceDetails.forEach(detail => detail.classList.remove('active'));
+        
+        // Add active class to clicked item
+        item.classList.add('active');
+        
+        // Show corresponding experience detail
+        const targetDetail = document.getElementById(target);
+        if (targetDetail) {
+            targetDetail.classList.add('active');
         }
-    });
-}, observerOptions);
-
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.experience-card, .education-card, .about-card, .skill-category, .project-card, .contact-item');
-    
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
     });
 });
 
+// Active nav link on scroll
 const sections = document.querySelectorAll('.section, .hero');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -90,36 +86,28 @@ window.addEventListener('scroll', () => {
     });
 });
 
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
+// Fade in animation on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-document.querySelectorAll('.skill-tag').forEach(tag => {
-    tag.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1)';
-        this.style.transition = 'transform 0.2s ease';
-    });
-    
-    tag.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-    });
-});
-
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
         }
-    }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.project-item, .education-item, .service-item, .skill-category, .contact-item');
     
-    type();
-}
+    animatedElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(element);
+    });
+});
